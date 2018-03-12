@@ -1,15 +1,37 @@
 #! /usr/bin/env python
-from gpiozero import LED, PWMOutputDevice
+
+#from gpiozero import LED, PWMOutputDevice
 from time import sleep
 from gpios import gpio40, gpio38, gpio37, gpio36
+from std_msgs.msg import Int32, String
+import rospy
 
-led = LED(gpio40)
+rospy.init_node("Hardware_interact")
+pub = rospy.Publisher('obstacles_distance', String, queue_size=10)
 
-while True:
-    led.on()
-    sleep(3)
-    led.off()
-    sleep(1)
+rate = rospy.Rate(10)
+wheels_stat = "going forward"
+count = 0
+
+while not rospy.is_shutdown():
+    
+    if count > 100:
+        wheels_stat = ""
+        count = 0
+    else:
+        count += 1
+
+    pub.publish(wheels_stat)
+    rate.sleep()
+
+
+#led = LED(gpio40)
+
+#while True:
+#    led.on()
+#    sleep(3)
+#    led.off()
+#    sleep(1)
 
 # DC Motors/Wheels GPIO mapping
 #dc_motor_IN1 = PWMOutputDevice(gpio36)

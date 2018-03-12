@@ -1,0 +1,4 @@
+<launch>
+  <node name="obstacles_distance" pkg="hardware_interact_package" type="obstacles_distance.py" output="screen" />
+  <node name="wheels" pkg="hardware_interact_package" type="wheels_stat.py" output="screen" />
+</launch>
